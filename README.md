@@ -1,82 +1,72 @@
-# Huffman-Coding
+# Implementation-of-Erosion-and-Dilation
 ## Aim
-To implement Huffman coding to compress the data using Python.
-
+To implement Erosion and Dilation using Python and OpenCV.
 ## Software Required
 1. Anaconda - Python 3.7
-
+2. OpenCV
 ## Algorithm:
 ### Step1:
-Get the input string.
-
+import the neccesary packages
 ### Step2:
-Create tree nodes.
-
+create the text using cv2.put Text
 ### Step3:
-Main function to implement huffman coding.
-
+create the structuting element
 ### Step4:
-calculate frequency of occurence.
-
+Erodde the image
 ### Step5:
-print the characters and its huffmancode.
+Dilate the image
 
-
+ 
 ## Program:
 
-``` Python
-NAME: SURIYA PRAVIN M
-REG NO:212223230223
-# expt-11-huff man coding
+``` 
+import cv2
+import numpy as np
+from matplotlib import pyplot as plt
+imput_image='actor.jpg'
+color_image=cv2.imread(imput_image)
+gray_image=cv2.cvtColor(color_image,cv2.COLOR_BGR2GRAY)
+edges=cv2.Canny(gray_image,100,200)
+kernel_size=5
+kernel=np.ones((kernel_size,kernel_size),np.uint8)
+erosion=cv2.erode(edges,kernel,iterations=1)
+dilation=cv2.dilate(edges,kernel,iterations=1)
+plt.figure(figsize=(15,10))
+plt.subplot(2,3,1)
+plt.imshow(cv2.cvtColor(color_image,cv2.COLOR_BGR2RGB))
+plt.title('Original Color Image')
+plt.axis('on')
+plt.subplot(2,3,2)
+plt.imshow(gray_image,cmap='gray')
+plt.title('black and white image')
+plt.axis('on')
+plt.subplot(2,3,3)
+plt.imshow(edges,cmap='gray')
+plt.title('edge segmentation')
+plt.axis('on')
+plt.subplot(2,3,4)
+plt.imshow(edges,cmap='gray')
+plt.title('erosion')
+plt.axis('on')
+plt.subplot(2,3,5)
+plt.imshow(edges,cmap='gray')
+plt.title('dilation')
+plt.axis('on')
 
-# Step 1: Get the input string
-input_string = "melkinsam"  # Example input string
-# Step 2: Calculate frequency of each character in the input string
-frequency = {}
-for char in input_string:
-    if char in frequency:
-        frequency[char] += 1
-    else:
-        frequency[char] = 1
-# Step 3: Create tree nodes
-nodes = [[char, freq] for char, freq in frequency.items()]
-# Step 4: Main function to implement Huffman coding
-while len(nodes) > 1:
-    # Sort nodes based on frequency
-    nodes = sorted(nodes, key=lambda x: x[1])
-
-    # Pick two smallest nodes
-    left = nodes.pop(0)
-    right = nodes.pop(0)
-
-    # Create a new node with combined frequency
-    new_node = [[left, right], left[1] + right[1]]
-    nodes.append(new_node)
-
-# The final node is the Huffman tree
-huffman_tree = nodes[0]
-# Step 5: Generate Huffman codes
-huffman_codes = {}
-
-def generate_codes(tree, code=""):
-    if isinstance(tree[0], str):  # If it's a leaf node
-        huffman_codes[tree[0]] = code
-    else:  # If it's an internal node, recurse
-        generate_codes(tree[0][0], code + "0")
-        generate_codes(tree[0][1], code + "1")
-
-generate_codes(huffman_tree)
-# Step 6: Print the characters and their Huffman codes
-print("Character | Huffman Code")
-print("-------------------------")
-for char, code in huffman_codes.items():
-    print(f"    {char}    |    {code}")
 ```
 ## Output:
-### Print the characters and its huffmancode
-<img width="269" height="204" alt="image" src="https://github.com/user-attachments/assets/41ba8deb-c563-4846-8aa9-664b0b153716" />
 
+### Display the input Image
 
+<img width="483" height="496" alt="image" src="https://github.com/user-attachments/assets/6dfcd0fc-cf89-4836-8b15-2bb49268c66c" />
+
+### Display the Eroded Image
+
+<img width="485" height="502" alt="image" src="https://github.com/user-attachments/assets/8fb47b20-d764-483c-8c30-3fc341fe4a3c" />
+
+### Display the Dilated Image
+
+<img width="481" height="502" alt="image" src="https://github.com/user-attachments/assets/fd8ae520-c8ba-4eeb-a220-eab0a6ed3d1b" />
 
 ## Result
-Thus the huffman coding was implemented to compress the data using python programming.
+Thus the generated text image is eroded and dilated using python and OpenCV.
